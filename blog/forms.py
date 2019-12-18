@@ -6,7 +6,7 @@ from blog.modules import User, Article, Comment, Subject
 
 
 # ===============================================================================
-# 							Creating new subject "Form"
+# 		Creating new subject "Form"
 # ===============================================================================
 class SubjectForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(min=5, max=30)])
@@ -20,7 +20,7 @@ class SubjectForm(FlaskForm):
 			raise ValidationError('This subject is already exists.')
 
 # ===============================================================================
-# 							Editing subject "Form"
+# 			Editing subject "Form"
 # ===============================================================================
 class EditSubjectForm(FlaskForm):
 	name = StringField('Name', validators=[DataRequired(), Length(min=5, max=30)])
@@ -28,7 +28,7 @@ class EditSubjectForm(FlaskForm):
 	submit = SubmitField('Update')
 
 # ===============================================================================
-# 							Creating new article "Form"
+# 			Creating new article "Form"
 # ===============================================================================
 class ArticleForm(FlaskForm):
 	subject = SelectField('Select Subject', coerce=int, validators=[DataRequired()])
@@ -39,7 +39,7 @@ class ArticleForm(FlaskForm):
 	submit = SubmitField('Post')
 
 	# ===============================================================================
-	# 				validating if title is already exists "function"
+	# 		validating if title is already exists "function"
 	# ===============================================================================
 	def validate_title(self, title):
 		result = Article.query.filter(Article.title == title.data).first()
@@ -47,7 +47,7 @@ class ArticleForm(FlaskForm):
 			raise ValidationError('This title is already posted.')
 
 # ===============================================================================
-# 						Comment "Form"
+# 			Comment "Form"
 # ===============================================================================
 class CommentForm(FlaskForm):
 	content = TextAreaField('Comment Content', validators=[DataRequired('Content field is Empty'), Length(min=3)])
@@ -55,7 +55,7 @@ class CommentForm(FlaskForm):
 	submit = SubmitField('Post Comment')
 
 	# ===============================================================================
-	# 				validate comment content  "function"
+	# 		validate comment content  "function"
 	# ===============================================================================
 	def validate_content(self, content):
 		improper_words = ['Stupid', 'F*ck', 'F*ck you', 'Shit', 'Piss off',
@@ -66,7 +66,7 @@ class CommentForm(FlaskForm):
 				raise ValidationError('Our system does not support commenting with improper words please try to use polite words')
 
 # ===============================================================================
-# 						User Registration "Form"
+# 			User Registration "Form"
 # ===============================================================================
 class RegistrationForm(FlaskForm):
 	username = StringField('UserName', validators=[DataRequired()])
@@ -76,7 +76,7 @@ class RegistrationForm(FlaskForm):
 	submit = SubmitField('Create Account')
 
 	# ===============================================================================
-	# 	validate user's email is already in our system when he/she try to register "function"
+	# validate user's email is already in our system when he/she try to register "function"
 	# ===============================================================================
 	def validate_email(self, email):
 		user = User.query.filter_by(email=email.data).first()
@@ -84,7 +84,7 @@ class RegistrationForm(FlaskForm):
 			raise ValidationError('This emaill is alrealy exist in our system please choose another email')
 
 # ===============================================================================
-# 						User login "Form"
+# 			User login "Form"
 # ===============================================================================
 class LoginForm(FlaskForm):
    email = StringField('Email',
@@ -94,5 +94,5 @@ class LoginForm(FlaskForm):
    submit = SubmitField('Login')
 
 # ===============================================================================
-# 										END
+# 					END
 # ===============================================================================
