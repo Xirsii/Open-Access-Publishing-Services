@@ -1,0 +1,16 @@
+{% extends 'layouts.html' %}
+	{% block content %}
+	  	<h3 class="text text-center">{{subject.name}}</h3>
+                {% if subject.articles %}
+                    {% for article in subject.articles %}
+                        <ul class="list-group">
+                            <li class="list-group-item"><a href="{{ url_for('article', id=article.id) }}">{{ article.title }}</a>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Visitors: {{ article.visitors.count() }}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Likes: {{ article.likes.count() }}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Dislikes: {{ article.dislikes.count() }}</span>
+                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Comments: {{ article.comments.count() }}</span>
+                            </li>
+                        </ul>
+                    {% endfor %}
+                {% endif %}
+	{% endblock %}

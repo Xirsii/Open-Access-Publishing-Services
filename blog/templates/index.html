@@ -1,0 +1,14 @@
+{% extends "layouts.html" %}
+	{% block content %}
+		{% for subject in subjects %}
+					<ul class="list-group" style="float: center;">
+						{% if subject.articles.count() > 0 %}
+						<li class="list-group-item"><a href="{{ url_for('subject', id=subject.id) }}">{{ subject.name }} </a>
+							<span class="float-right">{{ subject.articles.count() }} articles</span></li>
+						{% else %}
+						<li class="list-group-item">{{ subject.name }} 
+							<span class="float-right">{{ subject.articles.count() }} article</span></li>
+						{% endif %}
+					</ul>
+		{% endfor %}
+	{% endblock %}

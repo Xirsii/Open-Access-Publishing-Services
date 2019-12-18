@@ -1,0 +1,61 @@
+{% extends "layouts.html" %}
+    {% block content %}
+        {% if my_subjects %}
+        <h5 class="text text-center mt-4">{{ current_user.username }}<span class="text-primary">'Subjects</span></h5>
+        <hr style="margin-top: -9px;">
+        <table class="table table-bordered mt-3">
+            <thead><tr class="bg-primary text-white">
+                <th>Date Posted</th>
+                <th>Subject Name</th>
+                <th class="bg-info">Subject Status</th>
+                <th>Edit</th>
+                <th>Drop</th>
+            </tr></thead>
+            <tbody>
+                {% for subject in my_subjects %}
+                <tr>
+                    <td>{{ subject.date_posted.strftime('%Y-%m-%d') }}</td>
+                    {% if subject.articles.count() > 0 %}
+                        <td>
+                            <a href="{{ url_for('subject', id=subject.id) }}">{{ subject.name }} </a>
+                            <span class="float-right">{{ subject.articles.count() }} articles</span>
+                        </td>
+                    {% else %}
+                        <td>{{ subject.name }} 
+                            <span class="float-right">{{ subject.articles.count() }} article</span>
+                        </td>
+                    {% endif %}
+                    {% if subject.status == 'Rejected' %}
+                        <td class="text-danger">{{ subject.status }}</td>
+                    {% else %}
+                        <td class="text-success">{{ subject.status }}</td>
+                    {% endif %}
+                    {% if subject.articles.count() > 0 %}
+                        <td><a href="{{ url_for('update_subject', subject_id=subject.id) }}" class="btn btn-outline-primary btn-block disabled">Edit</a></td>
+                        <td><a href="{{ url_for('check_subject', subject_id=subject.id) }}" class="btn btn-outline-danger btn-block disabled">Drop</a></td>
+                    {% else %}
+                        <td><a href="{{ url_for('update_subject', subject_id=subject.id) }}" class="btn btn-outline-primary btn-block">Edit</a></td>
+                        <td><a href="{{ url_for('drop_subject', subject_id=subject.id) }}" class="btn btn-outline-danger btn-block" onclick="return confirm('Are you sure');">Drop</a></td>
+                    {% endif %}
+                    {% endfor %}
+                </tr>
+            </tbody>
+        </table>
+        {% endif %}
+        <h5 class="text text-center mt-4">{{ current_user.username }}<span class="text-primary">'Articles</span></h5>
+        <hr style="margin-top: -9px;">
+        {% if my_articles %}
+            {% for article in my_articles %}
+                <ul class="list-group">
+                    <li class="list-group-item"><a href="{{ url_for('article', id=article.id) }}">{{ article.title }}</a>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Visitors: {{ article.visitors.count() }}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Likes: {{ article.likes.count() }}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Dislikes: {{ article.dislikes.count() }}</span>
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span>Comments: {{ article.comments.count() }}</span>
+                    </li>
+                </ul>
+            {% endfor %}
+        {% else %}
+            <span class="text text-muted text-center">You have no articles!</span>
+        {% endif %}
+	{% endblock %}

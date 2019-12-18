@@ -1,0 +1,12 @@
+{% extends 'layouts.html' %}
+	{% block content %}
+          <small><b class="text-primary">Author Email {{ subject.authorEmail }}</b>
+            <b class="text-primary float-right">Published at {{  subject.date_posted.strftime('%Y-%m-%d') }}</b></small>
+		  <hr>
+		  <div class="container">
+            <h4 class="article_title text-center">{{ subject.name }}</h4>
+            <p class="article_body">{{ subject.purpose | safe }}</p>
+            <a href="{{ url_for('approve', subject_id=subject.id) }}" class="btn btn-outline-success float-right btn-block">Uprove</a>
+            <a href="{{ url_for('reject', subject_id=subject.id) }}" class="btn btn-outline-danger float-left btn-block">Reject</a>    
+         </div>
+    {% endblock %}

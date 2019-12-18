@@ -1,0 +1,55 @@
+{% extends "layouts.html" %}
+    {% block content %}
+        {% if articles or comments or subjects %}
+            {% if subjects %}
+                <h6 class="text  text-muted text-center mt-4">Here are subject matched your search content</h6>
+                <hr style="margin-top: -9px;">
+                {% for subject in subjects %}
+                <ul class="list-group" style="float: center;">
+                    {% if subject.articles.count() > 0 %}
+                    <li class="list-group-item"><a href="{{ url_for('subject', id=subject.id) }}">{{ subject.name }} </a>
+                        <span class="float-right">{{ subject.articles.count() }} articles</span></li>
+                    {% else %}
+                    <li class="list-group-item">{{ subject.name }} 
+                        <span class="float-right">{{ subject.articles.count() }} article</span></li>
+                    {% endif %}
+                </ul>
+                {% endfor %}
+                <br><br>
+            {% endif %}
+            {% if articles %}
+                <h6 class="text  text-muted text-center mt-4">Here are articles matched your search content</h6>
+                <hr style="margin-top: -9px;">
+                {% for article in articles %}
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="{{ url_for('article', id=article.id, content=content) }}">{{ article.title }}</a>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Visitors: {{ article.visitors.count() }}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Likes: {{ article.likes.count() }}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Dislikes: {{ article.dislikes.count() }}</span>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-primary">Comments: {{ article.comments.count() }}</span>
+                        </li>
+                    </ul>
+                {% endfor %} 
+            {% endif %}
+            <br><br>
+            {% if comments %}
+                <h6 class="text  text-muted text-center mt-4">Here are comments matched your search content</h6>
+                <hr style="margin-top: -9px;">
+                {% for comment in comments %}
+                    <div class="container">
+                        <hr>
+                        <small>
+                            <span class="float-left">
+                                Author: {{ comment.authorEmail }}</span>
+                            <span class="float-right">Posted at: {{ comment.date_posted.strftime('%Y-%m-%d') }}</span>
+                        </small><br>
+                        {% if content in comment.content %}
+                            {{ comment.content.replace(content, '<span style="background-color: yellow;">{}</span>'.format(content)) | safe }}
+                        {% endif %}
+                    </div><br>
+                {% endfor %}
+            {% endif %}
+        {% else %}
+            <img src="{{ url_for('static', filename='images/not_found.png') }}" alt="">
+        {% endif %}
+    {% endblock %}

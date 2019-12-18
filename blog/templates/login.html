@@ -1,0 +1,49 @@
+{% extends 'layouts.html' %}
+{% block content %}
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <form method="POST" action="">
+        {{ form.hidden_tag() }}
+        <fieldset class="form-group">
+          <legend class="border-botton mb-4 text-center">Welcome Back</legend>
+                <div class="form-group">
+                  {{ form.email.label(class="form-control-label") }}
+                  {% if form.email.errors %}
+                        {{ form.email(class="form-control form-control-md is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.email.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                           {{ form.email(class="form-control form-control-md") }}
+                    {% endif %}
+                </div> 
+                <div class="form-group">
+                  {{ form.password.label(class="form-control-label") }}
+                  {% if form.password.errors %}
+                        {{ form.password(class="form-control form-control-md is-invalid") }}
+                        <div class="invalid-feedback">
+                            {% for error in form.password.errors %}
+                                <span>{{ error }}</span>
+                            {% endfor %}
+                        </div>
+                        {% else %}
+                           {{ form.password(class="form-control form-control-md") }}
+                    {% endif %}
+                </div>        
+        </fieldset>
+         <div class="form-group">
+                    {{ form.submit(class="btn btn-primary btn-block") }}
+                </div> 
+      </form>
+        <div class="border-top pt-3">
+          <p class="text-muted">
+              Not yet a member? -- <a href="{{ url_for('register') }}" style="text-decoration: none;">Sign Up Now</a>
+          </p>
+        </div>
+      </div>
+      <div class="col-md-2"></div>
+    </div>
+{% endblock %}
