@@ -14,14 +14,14 @@ UPLOAD_FOLDER = basedir + '/static/articlefiles'
 app.config['UPLOAD_FOLDER'] = os.path.join(basedir+'/static/articlefiles')
 
 # ===============================================================================
-# 							download article file "root"
+# 			download article file "root"
 # ===============================================================================
 @app.route("/download/<filename>", methods=['GET'])
 def download_file(filename):
     return send_from_directory(os.path.join(app.config['UPLOAD_FOLDER']), filename, as_attachment=True)
 
 # ===============================================================================
-# 							search "root"
+# 			search "root"
 # ===============================================================================
 @app.route('/Search', methods=['GET', 'POST'])
 def search():
@@ -55,7 +55,7 @@ def dashboard():
 		return redirect(url_for('Subjects'))
 
 # ===============================================================================
-# 							like article "root"
+# 				like article "root"
 # ===============================================================================
 @app.route('/like', methods=['POST'])
 def like():
@@ -102,7 +102,7 @@ def like():
 		return jsonify({'data' : data})
 
 # ===============================================================================
-# 							dislike article "root"
+# 			dislike article "root"
 # ===============================================================================
 @app.route('/dislike', methods=['POST']) 
 def dislike():
@@ -148,7 +148,7 @@ def dislike():
 		return jsonify({'data' : data})
 
 # ===============================================================================
-# 							admin approve subject "root"
+# 		admin approve subject "root"
 # ===============================================================================
 @app.route('/Approve_subjects', methods=['GET'])
 @login_required
@@ -162,7 +162,7 @@ def uprove_subjects():
 		return redirect(url_for('Subjects'))
 
 # ===============================================================================
-# 			admin check "subject" before you approve or reject "root"
+#  admin check "subject" before you approve or reject "root"
 # ===============================================================================
 @app.route('/subject/<int:subject_id>/check', methods=['GET', 'POST'])
 @login_required
@@ -176,7 +176,7 @@ def check_subject(subject_id):
 		return redirect(url_for('Subjects'))
 
 # ===============================================================================
-# 			admin approve subject "root"
+# 		admin approve subject "root"
 # ===============================================================================
 @app.route('/Subject<int:subject_id>/Approve')
 @login_required
@@ -193,7 +193,7 @@ def approve(subject_id):
 
 
 # ===============================================================================
-# 					admin reject subject "root"
+# 			admin reject subject "root"
 # ===============================================================================
 @app.route('/Subject/<int:subject_id>/Reject')
 @login_required
@@ -209,7 +209,7 @@ def reject(subject_id):
 		return redirect(url_for('Subjects'))
 
 # ===============================================================================
-# 							home  "root"
+# 			home  "root"
 # ===============================================================================
 @app.route('/')
 def Subjects():
@@ -217,7 +217,7 @@ def Subjects():
 	return render_template('index.html', subjects=subjects)
 
 # ===============================================================================
-# 							single subject "root"
+# 		single subject "root"
 # ===============================================================================
 @app.route('/subject/<int:id>', methods=['POST', 'GET'])
 def subject(id):
@@ -225,7 +225,7 @@ def subject(id):
 	return render_template('subject.html', subject=subject)
 
 # ===============================================================================
-# 							create subject "root"
+# 		create subject "root"
 # ===============================================================================
 @app.route('/Create_Subject', methods=['POST', 'GET'])
 def new_subject():
@@ -286,7 +286,7 @@ def drop_subject(subject_id):
 		return redirect(url_for('dashboard'))
 
 # ===============================================================================
-# 						view article "root"
+# 			view article "root"
 # ===============================================================================
 @app.route('/article/<int:id>', methods=['POST', 'GET'])
 def article(id):
@@ -307,7 +307,7 @@ def article(id):
 	return render_template('article.html', article=article, form=form, Comment=Comment, len=len)
 
 # ===============================================================================
-# 							save articlefile  "function"
+# 		save articlefile  "function"
 # ===============================================================================
 def save_articlefile(article_file):
 	if article_file:
@@ -319,7 +319,7 @@ def save_articlefile(article_file):
 		return file_fn
 
 # ===============================================================================
-# 							create article "root"
+# 			create article "root"
 # ===============================================================================
 @app.route('/Create_Article', methods=['POST', 'GET'])
 def New_Article():
@@ -341,7 +341,7 @@ def New_Article():
 	return render_template('Create_Article.html', form=form, subjects=subjects)
 
 # ===============================================================================
-# 							register user "root"
+# 			register user "root"
 # ===============================================================================
 @app.route('/register', methods=['POST', 'GET'])
 def register():
@@ -358,7 +358,7 @@ def register():
     return render_template('register.html',form=form)
 
 # ===============================================================================
-# 							login user "root"
+# 		login user "root"
 # ===============================================================================
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -376,7 +376,7 @@ def login():
     return render_template('login.html',form=form)
 
 # ===============================================================================
-# 							logout user "root"
+# 		logout user "root"
 # ===============================================================================
 @app.route('/logout') 
 def logout():
@@ -384,5 +384,5 @@ def logout():
     return redirect(url_for('Subjects'))
 
 # ===============================================================================
-# 										END
+# 				END
 # ===============================================================================
