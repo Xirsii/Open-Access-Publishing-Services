@@ -14,6 +14,9 @@ class SubjectForm(FlaskForm):
 	purpose = TextAreaField('Purpose', validators=[DataRequired(), Length(min=100)])
 	submit = SubmitField('Create')
 
+	# ===============================================================================
+	# 			Avoid duplicate subject name "function"
+	# ===============================================================================
 	def validate_name(self, name):
 		result = Subject.query.filter(Subject.name == name.data).first()
 		if result:
@@ -39,7 +42,7 @@ class ArticleForm(FlaskForm):
 	submit = SubmitField('Post')
 
 	# ===============================================================================
-	# 		validating if title is already exists "function"
+	# 			Avoid duplicate article name "function"
 	# ===============================================================================
 	def validate_title(self, title):
 		result = Article.query.filter(Article.title == title.data).first()
