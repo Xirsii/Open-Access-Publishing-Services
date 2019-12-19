@@ -8,8 +8,8 @@
 		  <div class="container">
             <h4 class="article_title text-center">{{ article.title }}</h4>
             {% if content %}
-                {% if content in article.body %}
-                    {{ article.body.replace(content, '<span style="background-color: yellow;">{}</span>'.format(content)) | safe }}
+                {% if content.lower() in article.body.lower() %}
+                    {{ article.body.lower().replace(content.lower(), '<span style="background-color: yellow;">{}</span>'.format(content)) | safe }}
                 {% endif %}
                 {% else %}
                     <p class="article_body">{{ article.body | safe }}</p>
