@@ -62,6 +62,12 @@ class CommentForm(FlaskForm):
 	# ===============================================================================
 	def validate_content(self, content):
 		improper_words = ['Stupid', 'F*ck', 'F*ck you', 'Shit', 'Piss off',
+		'Dick head', 'Asshole', 'Son of a b*tch', 'Fuck You', 'Bastard', 'Bitch',
+		'Damn', 'C*nt', 'Bollocks', 'Bugger', 'Bloody Hell', 'Choad', 'Fuck off', 'Illiterate']
+		for iw in improper_words:
+			if content.data.lower().find(iw.lower()) > -1:
+				raise ValidationError('Our system does not support commenting with improper words please try to use polite words')
+		improper_words = ['Stupid', 'F*ck', 'F*ck you', 'Shit', 'Piss off',
 		'Dick head', 'Asshole', 'Son of a b*tch', 'Bastard', 'Bitch',
 		'Damn', 'C*nt', 'Bollocks', 'Bugger', 'Bloody Hell', 'Choad', 'Fuck off', 'Illiterate']
 		for iw in improper_words:
